@@ -12,18 +12,22 @@ void ColorSensor::setup(){
 
 ColorSensor::Colors ColorSensor::read_color() {
 	digitalWrite(this->pin_s3, LOW);
-	int RedPW = pulseIn(this->pin_out, LOW);
+	float RedPW = COLOR_CALCULATION_PRECISION_SCALING / pulseIn(this->pin_out, LOW);
 	digitalWrite(this->pin_s3, HIGH);
-	int BluePW = pulseIn(this->pin_out, LOW);
+	float BluePW = COLOR_CALCULATION_PRECISION_SCALING / pulseIn(this->pin_out, LOW);
 	
 	//Hmm
-	int BlueValue = map(BluePW, this->b_min, this->b_max, 255, 0);
-	int RedValue = map(RedPW, this->r_min, this->r_max, 255, 0);
+	float BlueValue = map(BluePW, this->b_min, this->b_max, 0, 255);
+	float RedValue = map(RedPW, this->r_min, this->r_max, 0, 255);
 	
+	float TotalValue = BlueValue + RedValue;
+	BlueValue /= TotalValue;
+	RedValue /= TotalValue;
+
 	//Hmm
-	if(BlueValue > RedValue && ((BlueValue-RedValue) >= 30) && RedValue < 110) { //Rules can change depending upon calibration values
+	if(BlueValue > 0.55) { //Rules can change depending upon calibration values
 		return Colors::Blue;
-	} else if (BlueValue < RedValue && RedValue > 150 && (RedValue-BlueValue >= 30)) { //Rules can change depending upon calibration values
+	} else if (RedValue > 0.65) { //Rules can change depending upon calibration values
 		return Colors::Red;
 	} else {
 		return Colors::None;

@@ -112,9 +112,9 @@ bool Motors::step() {
 			double DistanceR = right->distance();
 			double DistanceL = left->distance();
 
-			if(DistanceR > 10 && DistanceL > 10){
+			if(DistanceR > 7 && DistanceL > 7){
 				MSM.current = States::GoAroundCruise;
-			} else if(DistanceR < 10 && DistanceL < 10){
+			} else if(DistanceR < 7 && DistanceL < 7){
 				MSM.current = States::GoAroundStepBack;
 			} else {
 				MSM.current = States::None;
@@ -138,7 +138,7 @@ bool Motors::step() {
 		case States::FollowTheWallsDecide: {
 			double DistanceR = right->distance();
 			double DistanceL = left->distance();
-			if(DistanceR < 10 && DistanceL < 10){
+			if(DistanceR < 7 && DistanceL < 7){
 				MSM.current = States::FollowTheWallsStepBack;
 			} else {
 				MSM.current = States::FollowTheWallsCruise;

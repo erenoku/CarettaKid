@@ -20,11 +20,6 @@ double Sonic::distance(){
   Time = pulseIn(pin_echo,HIGH);
   Distance = Time / 58.2;
   
-  if(Distance>=DISTANCE_MAX || Distance<=DISTANCE_MIN){
-    return 0;
-  }
-  else{
-    return Distance;
-  }
+  return Distance;
 
 }
