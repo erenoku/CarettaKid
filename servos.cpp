@@ -13,8 +13,8 @@ bool rival_taking = false;
 bool ours_taking = false;
 
 void Servos::setup_servos() {
-    PuckServo.attach(PIN_SERVO1);
-    OpenCloseServo.attach(PIN_SERVO2);
+    PuckServo.attach(PIN_SERVO_PUCK);
+    OpenCloseServo.attach(PIN_SERVO_BASE);
 }
 
 void Servos::S1::take_rival() {

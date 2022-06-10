@@ -16,6 +16,9 @@ ColorSensor::Colors TeamColor;
 ColorSensor::Colors RivalColor;
 
 void setup(){
+
+  delay(500);
+
   if (digitalRead(PIN_IS_TEAM_BLUE)) {
     TeamColor = ColorSensor::Colors::Blue;
     RivalColor = ColorSensor::Colors::Red;
