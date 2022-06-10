@@ -1,7 +1,7 @@
 #include "colorsensor.hpp"
 #include "constants.hpp"
 
-ColorSensor::ColorSensor(int S3, int Out) : pin_s3(S3), pin_out(Out), red_last_millis(0), blue_last_millis(0), counting_red(0), counting_blue(0) {
+ColorSensor::ColorSensor(int S3, int Out, int RedMin, int RedMax, int BlueMin, int BlueMax) : pin_s3(S3), pin_out(Out), red_last_millis(0), blue_last_millis(0), counting_red(0), counting_blue(0), r_min(RedMin), r_max(RedMax), b_min(BlueMin), b_max(BlueMax) {
 
 }
 
@@ -17,8 +17,8 @@ ColorSensor::Colors ColorSensor::read_color() {
 	int BluePW = pulseIn(this->pin_out, LOW);
 	
 	//Hmm
-	int BlueValue = map(BluePW, BLUE_MIN, BLUE_MAX, 255, 0);
-	int RedValue = map(RedPW, RED_MIN, RED_MAX, 255, 0);
+	int BlueValue = map(BluePW, this->b_min, this->b_max, 255, 0);
+	int RedValue = map(RedPW, this->r_min, this->r_max, 255, 0);
 	
 	//Hmm
 	if(BlueValue > RedValue && ((BlueValue-RedValue) >= 30) && RedValue < 110) { //Rules can change depending upon calibration values

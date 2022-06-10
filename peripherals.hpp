@@ -6,10 +6,11 @@
 
 //Color Sensor Pins
 
-#define PIN_COLOR1_S3 A2
-#define PIN_COLOR1_OUT A3
-#define PIN_COLOR2_S3 A0
-#define PIN_COLOR2_OUT A1
+#define PIN_PUCK_COLOR_S3 A2
+#define PIN_PUCK_COLOR_OUT A3
+#define PIN_BASE_COLOR_S3 A0
+#define PIN_BASE_COLOR_OUT A1
+
 
 //DC Motor Pins
 

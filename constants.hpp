@@ -4,11 +4,15 @@
 
 //TODO: Re-Seperate these values if necessary
 
-#define RED_MAX 153
-#define RED_MIN 25
+#define PUCK_RED_MAX 153
+#define PUCK_RED_MIN 25
+#define PUCK_BLUE_MAX 191
+#define PUCK_BLUE_MIN 29
 
-#define BLUE_MAX 191
-#define BLUE_MIN 29
+#define BASE_RED_MAX 153
+#define BASE_RED_MIN 25
+#define BASE_BLUE_MAX 191
+#define BASE_BLUE_MIN 29
 
 #define CORRECT_PUCK_ANGLE 100
 #define WRONG_PUCK_ANGLE 200

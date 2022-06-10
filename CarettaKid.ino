@@ -5,8 +5,8 @@
 #include "constants.hpp"
 #include "servos.hpp"
 
-ColorSensor Color1(PIN_COLOR1_S3, PIN_COLOR1_OUT);
-ColorSensor Color2(PIN_COLOR2_S3, PIN_COLOR2_OUT);
+ColorSensor PuckColorSensor(PIN_PUCK_COLOR_S3, PIN_PUCK_COLOR_OUT, PUCK_RED_MIN, PUCK_RED_MAX, PUCK_BLUE_MIN, PUCK_BLUE_MAX);
+ColorSensor BaseColorSensor(PIN_BASE_COLOR_S3, PIN_BASE_COLOR_OUT, BASE_RED_MIN, BASE_RED_MAX, BASE_BLUE_MIN, BASE_BLUE_MAX);
 Sonic RightSonic(PIN_SONIC_RIGHT_ECHO, PIN_SONIC_RIGHT_TRIG);
 Sonic LeftSonic(PIN_SONIC_LEFT_ECHO, PIN_SONIC_LEFT_TRIG);
 Motors DCMotors(&LeftSonic, &RightSonic, PIN_M1F, PIN_M1B, PIN_M2F, PIN_M2B, PIN_M1S, PIN_M2S);
@@ -24,8 +24,8 @@ void setup(){
     RivalColor = ColorSensor::Colors::Blue;
   }
 
-  Color1.setup();
-  Color2.setup();
+  PuckColorSensor.setup();
+  BaseColorSensor.setup();
 
   DCMotors.setup();
 
@@ -48,8 +48,8 @@ void loop(){
   }
 
   //Color
-  ColorSensor::Colors PuckColor = Color1.sync_color();
-  ColorSensor::Colors BaseColor = Color2.sync_color();
+  ColorSensor::Colors PuckColor = PuckColorSensor.sync_color();
+  ColorSensor::Colors BaseColor = BaseColorSensor.sync_color();
 
   //Servos
   if (PuckColor == RivalColor) {

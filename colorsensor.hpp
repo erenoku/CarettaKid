@@ -4,7 +4,7 @@
 class ColorSensor {
 
   public:
-    ColorSensor(int S3, int Out);
+    ColorSensor(int S3, int Out, int RedMin, int RedMax, int BlueMin, int BlueMax);
 
     void setup();
 
@@ -16,6 +16,12 @@ class ColorSensor {
     Colors sync_color();
   private:
     Colors read_color();
+
+    const int r_min;
+    const int r_max;
+    const int b_min;
+    const int b_max;
+
     const int pin_s3;
     const int pin_out;
 
