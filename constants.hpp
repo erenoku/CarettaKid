@@ -17,19 +17,22 @@
 #define BASE_BLUE_MIN (COLOR_CALCULATION_PRECISION_SCALING / 470.0)
 
 
-#define CORRECT_PUCK_ANGLE 130
-#define WRONG_PUCK_ANGLE 10
+#define CORRECT_PUCK_ANGLE 100
+#define WRONG_PUCK_ANGLE 0
 #define OPEN_ANGLE 130
 #define CLOSE_ANGLE 23
 
 //TODO: Determine speeds
 
-#define CRUISE_SPEED1 0
-#define CRUISE_SPEED2 0
-#define TURNING_SPEED 0
+#define CRUISE_SPEED1 244 / 1.3
+#define CRUISE_SPEED2 203 / 1.3
+#define TURNING_SPEED 200 / 1.3
 
 #define DISTANCE_MAX 50.0
 #define DISTANCE_MIN 0.5
 
 //milliseconds of time of consistent color sensor measurement required for accurate reading
-#define COLOR_SENSOR_CONSISTENCY_THRESHHOLD 50
+#define COLOR_SENSOR_CONSISTENCY_THRESHHOLD 0
+#define SONIC_WALL_THRESHHOLD 20
+#define SONIC_STUCK_THRESHHOLD 2400
+#define DEBUG

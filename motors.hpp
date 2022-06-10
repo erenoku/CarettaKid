@@ -2,6 +2,7 @@
 
 #include <Arduino.h>
 #include "sonic.hpp"
+#include "constants.hpp"
 
 class Motors{
 
@@ -23,6 +24,10 @@ class Motors{
     const int pin_m2b;
     const int pin_m1s;
     const int pin_m2s;
+
+    unsigned long stuck_time;
+    bool is_stuck;
+
     bool step();
     void cruise();
     void step_back();
@@ -49,6 +54,9 @@ class Motors{
         };
         static const int durations[States::LENGTH];
         static const States next[States::LENGTH];
+        #ifdef DEBUG
+        static const char *const labels[States::LENGTH];
+        #endif
         void reset_timer();
         States current;
         bool poll_and_switch();

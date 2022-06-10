@@ -4,6 +4,7 @@
 #include "peripherals.hpp"
 #include "constants.hpp"
 #include "servos.hpp"
+#include "debug.hpp"
 
 ColorSensor PuckColorSensor(PIN_PUCK_COLOR_S3, PIN_PUCK_COLOR_OUT, PUCK_RED_MIN, PUCK_RED_MAX, PUCK_BLUE_MIN, PUCK_BLUE_MAX);
 ColorSensor BaseColorSensor(PIN_BASE_COLOR_S3, PIN_BASE_COLOR_OUT, BASE_RED_MIN, BASE_RED_MAX, BASE_BLUE_MIN, BASE_BLUE_MAX);
@@ -15,14 +16,20 @@ Motors DCMotors(&LeftSonic, &RightSonic, PIN_M1F, PIN_M1B, PIN_M2F, PIN_M2B, PIN
 ColorSensor::Colors TeamColor;
 ColorSensor::Colors RivalColor;
 
-void setup(){
+void setup() {
+
+  #ifdef DEBUG
+  Serial.begin(9600);
+  #endif
 
   delay(500);
 
   if (digitalRead(PIN_IS_TEAM_BLUE)) {
     TeamColor = ColorSensor::Colors::Blue;
     RivalColor = ColorSensor::Colors::Red;
+    DEBUG_PRINT("BLUE TEAM\n");
   } else {
+    DEBUG_PRINT("RED TEAM\n");
     TeamColor = ColorSensor::Colors::Red;
     RivalColor = ColorSensor::Colors::Blue;
   }
@@ -37,7 +44,7 @@ void setup(){
 
   Servos::setup_servos();
 
-  Serial.begin(9600);
+  
 }
 
 
@@ -53,7 +60,17 @@ void loop(){
   //Color
   ColorSensor::Colors PuckColor = PuckColorSensor.sync_color();
   ColorSensor::Colors BaseColor = BaseColorSensor.sync_color();
+  DEBUG_PRINT("Our Pucks: ");
+  DEBUG_PRINT(Servos::our_count);
+  DEBUG_PRINT("\nRival Pucks: ");
+  DEBUG_PRINT(Servos::rival_count);
+  DEBUG_PRINT("\n");
 
+  if (BaseColor == TeamColor) {
+    Servos::S2::open();
+  } else {
+    Servos::S2::close();
+  }
   //Servos
   if (PuckColor == RivalColor) {
     if (Servos::rival_count < 4) {
@@ -72,11 +89,7 @@ void loop(){
     Servos::S1::finish_taking();
   }
 
-  if (BaseColor == TeamColor) {
-    Servos::S2::open();
-  } else {
-    Servos::S2::close();
-  }
+  
 
   DCMotors.main_loop();
 }

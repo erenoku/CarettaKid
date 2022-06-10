@@ -1,6 +1,6 @@
 #include "colorsensor.hpp"
 #include "constants.hpp"
-
+#include "debug.hpp"
 ColorSensor::ColorSensor(int S3, int Out, int RedMin, int RedMax, int BlueMin, int BlueMax) : pin_s3(S3), pin_out(Out), red_last_millis(0), blue_last_millis(0), counting_red(0), counting_blue(0), r_min(RedMin), r_max(RedMax), b_min(BlueMin), b_max(BlueMax) {
 
 }
@@ -23,7 +23,13 @@ ColorSensor::Colors ColorSensor::read_color() {
 	float TotalValue = BlueValue + RedValue;
 	BlueValue /= TotalValue;
 	RedValue /= TotalValue;
-
+	/*
+	DEBUG_PRINT("[Colors] BlueValue:" );
+	DEBUG_PRINT(BlueValue);
+	DEBUG_PRINT("\n[Colors] RedValue: ");
+	DEBUG_PRINT(RedValue);
+	DEBUG_PRINT("\n");
+	*/
 	//Hmm
 	if(BlueValue > 0.55) { //Rules can change depending upon calibration values
 		return Colors::Blue;
@@ -56,7 +62,7 @@ ColorSensor::Colors ColorSensor::sync_color() {
 			counting_red = false;
 			if (counting_blue) {
 				if (millis() - blue_last_millis >= COLOR_SENSOR_CONSISTENCY_THRESHHOLD) {
-					return Colors::Red;					
+					return Colors::Blue;					
 				} else {
 					return Colors::None;
 				}

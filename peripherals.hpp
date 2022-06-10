@@ -14,25 +14,25 @@
 
 //DC Motor Pins
 
-#define PIN_M1F 5
-#define PIN_M1B 6
+#define PIN_M1F 3
+#define PIN_M1B 4
 #define PIN_M2F 11
 #define PIN_M2B 12
 
 //TODO: Speed Pins
 
-#define PIN_M1S 3
-#define PIN_M2S 4
+#define PIN_M1S 6
+#define PIN_M2S 5
 
 //Servo Pins
 
-#define PIN_SERVO_PUCK 10
-#define PIN_SERVO_BASE 9
+#define PIN_SERVO_PUCK 9
+#define PIN_SERVO_BASE 10
 
 //Sonic Sensor Pins
 
-#define PIN_SONIC_LEFT_ECHO 7
-#define PIN_SONIC_LEFT_TRIG 8
+#define PIN_SONIC_LEFT_ECHO 8
+#define PIN_SONIC_LEFT_TRIG 7
 #define PIN_SONIC_RIGHT_ECHO A4
 #define PIN_SONIC_RIGHT_TRIG A5
 
