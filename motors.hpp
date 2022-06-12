@@ -7,7 +7,7 @@
 class Motors{
 
   public:
-    Motors(Sonic *left, Sonic *right, int M1F, int M1B, int M2F, int M2B, int M1S, int M2S);
+    Motors(Sonic *right, int M1F, int M1B, int M2F, int M2B, int M1S, int M2S);
     void setup();
     void follow_the_walls_mode();
     void go_around_mode();
@@ -15,7 +15,6 @@ class Motors{
     void force_back_right();
     
   private:
-    Sonic *const left;
     Sonic *const right;
 
     const int pin_m1f;

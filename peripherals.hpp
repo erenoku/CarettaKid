@@ -31,8 +31,8 @@
 
 //Sonic Sensor Pins
 
-#define PIN_SONIC_LEFT_ECHO A5
-#define PIN_SONIC_LEFT_TRIG 7
+//#define PIN_SONIC_LEFT_ECHO A5
+//#define PIN_SONIC_LEFT_TRIG 7
 #define PIN_SONIC_RIGHT_ECHO A4
 #define PIN_SONIC_RIGHT_TRIG 8
 

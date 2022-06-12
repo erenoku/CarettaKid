@@ -9,8 +9,7 @@
 ColorSensor PuckColorSensor(PIN_PUCK_COLOR_S3, PIN_PUCK_COLOR_OUT, PUCK_RED_MIN, PUCK_RED_MAX, PUCK_BLUE_MIN, PUCK_BLUE_MAX, 0.60, 0.70);
 ColorSensor BaseColorSensor(PIN_BASE_COLOR_S3, PIN_BASE_COLOR_OUT, BASE_RED_MIN, BASE_RED_MAX, BASE_BLUE_MIN, BASE_BLUE_MAX, 0.60, 0.65);
 Sonic RightSonic(PIN_SONIC_RIGHT_ECHO, PIN_SONIC_RIGHT_TRIG);
-Sonic LeftSonic(PIN_SONIC_LEFT_ECHO, PIN_SONIC_LEFT_TRIG);
-Motors DCMotors(&LeftSonic, &RightSonic, PIN_M1F, PIN_M1B, PIN_M2F, PIN_M2B, PIN_M1S, PIN_M2S);
+Motors DCMotors(&RightSonic, PIN_M1F, PIN_M1B, PIN_M2F, PIN_M2B, PIN_M1S, PIN_M2S);
 
 
 ColorSensor::Colors TeamColor;
@@ -40,7 +39,6 @@ void setup() {
   DCMotors.setup();
 
   RightSonic.setup();
-  LeftSonic.setup();
 
   Servos::setup_servos();
 

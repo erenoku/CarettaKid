@@ -1,7 +1,7 @@
 #include "motors.hpp"
 #include "constants.hpp"
 #include "debug.hpp"
-Motors::Motors(Sonic *left, Sonic *right, int M1F, int M1B, int M2F, int M2B, int M1S, int M2S) : pin_m1f(M1F), pin_m1b(M1B), pin_m2f(M2F), pin_m2b(M2B), pin_m1s(M1S), pin_m2s(M2S), left(left), right(right), is_stuck(false), stuck_time(0) {
+Motors::Motors(Sonic *right, int M1F, int M1B, int M2F, int M2B, int M1S, int M2S) : pin_m1f(M1F), pin_m1b(M1B), pin_m2f(M2F), pin_m2b(M2B), pin_m1s(M1S), pin_m2s(M2S), right(right), is_stuck(false), stuck_time(0) {
 	
 }
 
@@ -118,14 +118,11 @@ bool Motors::step() {
 		break;
 		case States::GoAroundDecide: {
 			double DistanceR = right->distance();
-			double DistanceL = left->distance();
 			DEBUG_PRINT("DistanceR: ");
 			DEBUG_PRINT(DistanceR);
-			DEBUG_PRINT("\nDistanceL: ");
-			DEBUG_PRINT(DistanceL);
 			DEBUG_PRINT("\n");
 
-			if ((DistanceR >= SONIC_STUCK_THRESHHOLD || DistanceL >= SONIC_STUCK_THRESHHOLD)) {
+			if ((DistanceR >= SONIC_STUCK_THRESHHOLD)) {
 				if (!is_stuck) {
 					is_stuck = true;
 					stuck_time = millis();
@@ -135,9 +132,9 @@ bool Motors::step() {
 			}
 
 			
-			if ( (DistanceR < SONIC_WALL_THRESHHOLD || DistanceL < SONIC_WALL_THRESHHOLD) || (is_stuck && (millis() - stuck_time >= 3000)) ) {
+			if ( (DistanceR < SONIC_WALL_THRESHHOLD) || (is_stuck && (millis() - stuck_time >= 3000)) ) {
 				MSM.current = States::GoAroundStepBack;
-			} else if(DistanceR > SONIC_WALL_THRESHHOLD && DistanceL > SONIC_WALL_THRESHHOLD ){
+			} else if(DistanceR > SONIC_WALL_THRESHHOLD){
 				MSM.current = States::GoAroundCruise;
 			} else {
 				MSM.current = States::None;
@@ -160,9 +157,8 @@ bool Motors::step() {
 		break;
 		case States::FollowTheWallsDecide: {
 			double DistanceR = right->distance();
-			double DistanceL = left->distance();
 
-			if ((DistanceR >= SONIC_STUCK_THRESHHOLD || DistanceL >= SONIC_STUCK_THRESHHOLD)) {
+			if ((DistanceR >= SONIC_STUCK_THRESHHOLD)) {
 				if (!is_stuck) {
 					is_stuck = true;
 					stuck_time = millis();
@@ -170,9 +166,9 @@ bool Motors::step() {
 			} else {
 				is_stuck = false;
 			}
-			if ( (DistanceR < SONIC_WALL_THRESHHOLD || DistanceL < SONIC_WALL_THRESHHOLD) || (is_stuck && (millis() - stuck_time >= 3000)) ) {
+			if ( (DistanceR < SONIC_WALL_THRESHHOLD) || (is_stuck && (millis() - stuck_time >= 3000)) ) {
 				MSM.current = States::FollowTheWallsStepBack;
-			} else  if(DistanceR > SONIC_WALL_THRESHHOLD && DistanceL > SONIC_WALL_THRESHHOLD){
+			} else  if(DistanceR > SONIC_WALL_THRESHHOLD){
 				MSM.current = States::FollowTheWallsCruise;
 			} else {
 				MSM.current = States::None;
