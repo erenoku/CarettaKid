@@ -38,6 +38,10 @@ void Servos::S1::finish_taking() {
     }
 }
 
+void Servos::S1::reject() {
+    PuckServo.write(REJECTING_ANGLE);
+}
+
 void Servos::S2::open() {
     OpenCloseServo.write(OPEN_ANGLE);
     our_count = 0;

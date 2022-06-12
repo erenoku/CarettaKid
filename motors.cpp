@@ -31,8 +31,9 @@ void Motors::turn_right(){
 	digitalWrite(pin_m1f, HIGH);
 	digitalWrite(pin_m1b, LOW);
 	digitalWrite(pin_m2f, LOW);
-	digitalWrite(pin_m2b, LOW);
+	digitalWrite(pin_m2b, HIGH);
 	analogWrite(pin_m1s, TURNING_SPEED);	
+	analogWrite(pin_m2s, TURNING_SPEED);
 }
 
 void Motors::step_back(){
@@ -124,7 +125,7 @@ bool Motors::step() {
 			DEBUG_PRINT(DistanceL);
 			DEBUG_PRINT("\n");
 
-			if ((DistanceR >= SONIC_STUCK_THRESHHOLD && DistanceL >= SONIC_STUCK_THRESHHOLD)) {
+			if ((DistanceR >= SONIC_STUCK_THRESHHOLD || DistanceL >= SONIC_STUCK_THRESHHOLD)) {
 				if (!is_stuck) {
 					is_stuck = true;
 					stuck_time = millis();
@@ -133,10 +134,11 @@ bool Motors::step() {
 				is_stuck = false;
 			}
 
-			if(DistanceR > SONIC_WALL_THRESHHOLD && DistanceL > SONIC_WALL_THRESHHOLD){
-				MSM.current = States::GoAroundCruise;
-			} else if( (DistanceR < SONIC_WALL_THRESHHOLD && DistanceL < SONIC_WALL_THRESHHOLD) || (is_stuck && (millis() - stuck_time >= 3000)) ) {
+			
+			if ( (DistanceR < SONIC_WALL_THRESHHOLD || DistanceL < SONIC_WALL_THRESHHOLD) || (is_stuck && (millis() - stuck_time >= 3000)) ) {
 				MSM.current = States::GoAroundStepBack;
+			} else if(DistanceR > SONIC_WALL_THRESHHOLD && DistanceL > SONIC_WALL_THRESHHOLD ){
+				MSM.current = States::GoAroundCruise;
 			} else {
 				MSM.current = States::None;
 			}
@@ -159,10 +161,21 @@ bool Motors::step() {
 		case States::FollowTheWallsDecide: {
 			double DistanceR = right->distance();
 			double DistanceL = left->distance();
-			if(DistanceR < SONIC_WALL_THRESHHOLD && DistanceL < SONIC_WALL_THRESHHOLD){
-				MSM.current = States::FollowTheWallsStepBack;
+
+			if ((DistanceR >= SONIC_STUCK_THRESHHOLD || DistanceL >= SONIC_STUCK_THRESHHOLD)) {
+				if (!is_stuck) {
+					is_stuck = true;
+					stuck_time = millis();
+				}
 			} else {
+				is_stuck = false;
+			}
+			if ( (DistanceR < SONIC_WALL_THRESHHOLD || DistanceL < SONIC_WALL_THRESHHOLD) || (is_stuck && (millis() - stuck_time >= 3000)) ) {
+				MSM.current = States::FollowTheWallsStepBack;
+			} else  if(DistanceR > SONIC_WALL_THRESHHOLD && DistanceL > SONIC_WALL_THRESHHOLD){
 				MSM.current = States::FollowTheWallsCruise;
+			} else {
+				MSM.current = States::None;
 			}
 		}
 		break;
@@ -205,6 +218,7 @@ const Motors::MotorStateMachine::States Motors::MotorStateMachine::next[States::
 	States::RivalPuckTurnRight,				//RivalPuckStepBack,
 	States::None							//RivalPuckTurnRight,
 };
+#ifdef DEBUG
 const char *const Motors::MotorStateMachine::labels[States::LENGTH] = {
 	"None",
 	"GoAroundDecide",
@@ -218,3 +232,4 @@ const char *const Motors::MotorStateMachine::labels[States::LENGTH] = {
 	"RivalPuckStepBack",
 	"RivalPuckTurnRight"
 };
+#endif

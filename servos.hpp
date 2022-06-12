@@ -7,6 +7,7 @@ namespace Servos {
     namespace S1 {
         void take_rival();
         void take_ours();
+        void reject();
         void finish_taking();
     }
     namespace S2 {

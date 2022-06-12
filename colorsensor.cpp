@@ -1,7 +1,7 @@
 #include "colorsensor.hpp"
 #include "constants.hpp"
 #include "debug.hpp"
-ColorSensor::ColorSensor(int S3, int Out, int RedMin, int RedMax, int BlueMin, int BlueMax) : pin_s3(S3), pin_out(Out), red_last_millis(0), blue_last_millis(0), counting_red(0), counting_blue(0), r_min(RedMin), r_max(RedMax), b_min(BlueMin), b_max(BlueMax) {
+ColorSensor::ColorSensor(int S3, int Out, int RedMin, int RedMax, int BlueMin, int BlueMax, float BlueThresh, float RedThresh) : pin_s3(S3), pin_out(Out), red_last_millis(0), blue_last_millis(0), counting_red(0), counting_blue(0), r_min(RedMin), r_max(RedMax), b_min(BlueMin), b_max(BlueMax), b_thresh(BlueThresh), r_thresh(RedThresh) {
 
 }
 
@@ -23,17 +23,17 @@ ColorSensor::Colors ColorSensor::read_color() {
 	float TotalValue = BlueValue + RedValue;
 	BlueValue /= TotalValue;
 	RedValue /= TotalValue;
-	/*
+	
 	DEBUG_PRINT("[Colors] BlueValue:" );
 	DEBUG_PRINT(BlueValue);
 	DEBUG_PRINT("\n[Colors] RedValue: ");
 	DEBUG_PRINT(RedValue);
 	DEBUG_PRINT("\n");
-	*/
+	
 	//Hmm
-	if(BlueValue > 0.55) { //Rules can change depending upon calibration values
+	if(BlueValue > b_thresh) { //Rules can change depending upon calibration values
 		return Colors::Blue;
-	} else if (RedValue > 0.65) { //Rules can change depending upon calibration values
+	} else if (RedValue > r_thresh) { //Rules can change depending upon calibration values
 		return Colors::Red;
 	} else {
 		return Colors::None;
@@ -43,6 +43,9 @@ ColorSensor::Colors ColorSensor::read_color() {
 ColorSensor::Colors ColorSensor::sync_color() {
 	//Public wrapper for threshholding
 	Colors sensed = this->read_color();
+
+	return sensed;
+
 	switch (sensed) {
 		case Colors::Red:
 			counting_blue = false;

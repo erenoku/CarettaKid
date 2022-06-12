@@ -14,10 +14,10 @@
 
 //DC Motor Pins
 
-#define PIN_M1F 3
-#define PIN_M1B 4
-#define PIN_M2F 11
-#define PIN_M2B 12
+#define PIN_M1F 4
+#define PIN_M1B 3
+#define PIN_M2F 12
+#define PIN_M2B 11
 
 //TODO: Speed Pins
 
@@ -31,10 +31,10 @@
 
 //Sonic Sensor Pins
 
-#define PIN_SONIC_LEFT_ECHO 8
+#define PIN_SONIC_LEFT_ECHO A5
 #define PIN_SONIC_LEFT_TRIG 7
 #define PIN_SONIC_RIGHT_ECHO A4
-#define PIN_SONIC_RIGHT_TRIG A5
+#define PIN_SONIC_RIGHT_TRIG 8
 
 //Team Switch Pin
 
