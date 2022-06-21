@@ -2,19 +2,16 @@
 #include <Arduino.h>
 
 class ColorSensor {
-
-  public:
-    ColorSensor(int S3, int Out, int RedMin, int RedMax, int BlueMin, int BlueMax, float BlueThresh, float RedThresh);
+   public:
+    ColorSensor(int S3, int Out, int RedMin, int RedMax, int BlueMin,
+                int BlueMax, float BlueThresh, float RedThresh);
 
     void setup();
 
-    enum class Colors {
-      Red,
-      Blue,
-      None
-    };
+    enum class Colors { Red, Blue, None };
     Colors sync_color();
-  private:
+
+   private:
     Colors read_color();
 
     const int r_min;

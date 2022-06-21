@@ -1,20 +1,21 @@
 #pragma once
 
 #include <Arduino.h>
-#include "sonic.hpp"
+
 #include "constants.hpp"
+#include "sonic.hpp"
 
-class Motors{
-
-  public:
-    Motors(Sonic *left, Sonic *right, int M1F, int M1B, int M2F, int M2B, int M1S, int M2S);
+class Motors {
+   public:
+    Motors(Sonic *left, Sonic *right, int M1F, int M1B, int M2F, int M2B,
+           int M1S, int M2S);
     void setup();
     void follow_the_walls_mode();
     void go_around_mode();
     void main_loop();
     void force_back_right();
-    
-  private:
+
+   private:
     Sonic *const left;
     Sonic *const right;
 
@@ -33,35 +34,36 @@ class Motors{
     void step_back();
     void turn_right();
     class MotorStateMachine {
-      public:
+       public:
         MotorStateMachine();
         enum States {
-          None = 0,
-          GoAroundDecide,
-          GoAroundCruise,
-          GoAroundStepBack,
-          GoAroundTurnRight,
+            None = 0,
+            GoAroundDecide,
+            GoAroundCruise,
+            GoAroundStepBack,
+            GoAroundTurnRight,
 
-          FollowTheWallsDecide,
-          FollowTheWallsCruise,
-          FollowTheWallsStepBack,
-          FollowTheWallsTurnRight,
+            FollowTheWallsDecide,
+            FollowTheWallsCruise,
+            FollowTheWallsStepBack,
+            FollowTheWallsTurnRight,
 
-          RivalPuckStepBack,
-          RivalPuckTurnRight,
+            RivalPuckStepBack,
+            RivalPuckTurnRight,
 
-          LENGTH
+            LENGTH
         };
         static const int durations[States::LENGTH];
         static const States next[States::LENGTH];
-        #ifdef DEBUG
+#ifdef DEBUG
         static const char *const labels[States::LENGTH];
-        #endif
+#endif
         void reset_timer();
         States current;
         bool poll_and_switch();
         void continuous_schedule(States s);
-      private:
+
+       private:
         unsigned long time;
         States cont;
     };

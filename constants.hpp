@@ -2,7 +2,7 @@
 
 // -- CONSTANTS --
 
-//TODO: Re-Seperate these values if necessary
+// TODO: Re-Seperate these values if necessary
 
 #define COLOR_CALCULATION_PRECISION_SCALING 10000.0
 
@@ -16,16 +16,14 @@
 #define BASE_BLUE_MAX (COLOR_CALCULATION_PRECISION_SCALING / 95.0)
 #define BASE_BLUE_MIN (COLOR_CALCULATION_PRECISION_SCALING / 470.0)
 
-
 #define CORRECT_PUCK_ANGLE 50
 #define WRONG_PUCK_ANGLE 160
-#define REJECTING_ANGLE 100 
+#define REJECTING_ANGLE 100
 
 #define OPEN_ANGLE 130
 #define CLOSE_ANGLE 23
 
-
-//TODO: Determine speeds
+// TODO: Determine speeds
 
 #define CRUISE_SPEED1 170
 #define CRUISE_SPEED2 195
@@ -34,7 +32,8 @@
 #define DISTANCE_MAX 50.0
 #define DISTANCE_MIN 0.5
 
-//milliseconds of time of consistent color sensor measurement required for accurate reading
+// milliseconds of time of consistent color sensor measurement required for
+// accurate reading
 #define COLOR_SENSOR_CONSISTENCY_THRESHHOLD 0
 #define SONIC_WALL_THRESHHOLD 20
 #define SONIC_STUCK_THRESHHOLD 2000

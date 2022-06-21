@@ -1,8 +1,10 @@
+#include "servos.hpp"
+
 #include <Arduino.h>
 #include <Servo.h>
-#include "peripherals.hpp"
+
 #include "constants.hpp"
-#include "servos.hpp"
+#include "peripherals.hpp"
 
 static Servo PuckServo;
 static Servo OpenCloseServo;
@@ -38,15 +40,11 @@ void Servos::S1::finish_taking() {
     }
 }
 
-void Servos::S1::reject() {
-    PuckServo.write(REJECTING_ANGLE);
-}
+void Servos::S1::reject() { PuckServo.write(REJECTING_ANGLE); }
 
 void Servos::S2::open() {
     OpenCloseServo.write(OPEN_ANGLE);
     our_count = 0;
 }
 
-void Servos::S2::close() {
-    OpenCloseServo.write(CLOSE_ANGLE);
-}
+void Servos::S2::close() { OpenCloseServo.write(CLOSE_ANGLE); }
